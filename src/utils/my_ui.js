@@ -49,11 +49,13 @@ function createBaseElement(tag, props = {})
 }
 
 function getToastContainer() {
-  toastContainer = createBaseElement('div', {
-    className: 'toast-container position-fixed bottom-0 end-0 p-3',
-    style: 'z-index: 1055;' // Bootstrap modal at #1050
-  });
-  document.body.append(toastContainer);
+  if (!toastContainer) {
+    toastContainer = createBaseElement('div', {
+      className: 'toast-container position-fixed bottom-0 end-0 p-3',
+      style: 'z-index: 1055;' // Bootstrap modal at #1050
+    });
+    document.body.append(toastContainer);
+  }
   return toastContainer;
 }
 
@@ -200,6 +202,38 @@ const MyUI = {
     });
 
     return $modal;
+  },
+
+  Toast(props) {
+    const { message, variant = 'primary', duration = 3000, ...restProps } = props;
+    const container = getToastContainer();
+
+    const $body = createBaseElement('div', {
+      className: 'toast-body',
+      text: message
+    });
+
+    const $closeBtn = createBaseElement('button', {
+      type: 'button',
+      className: 'btn-close me-2 m-auto',
+      'aria-label': 'Close'
+    });
+
+    const $flexWrapper = createBaseElement('div', {
+      className: 'd-flex',
+      children: [$body, $closeBtn]
+    });
+
+    const $toast = createBaseElement('div', {
+      ...restProps,
+      className: `toast align-items-center text-bg-${variant} border-0 mb-2 show`,
+      role: 'alert',
+      'aria-live': 'assertive',
+      'aria-atomic': 'true',
+      children: $flexWrapper
+    });
+
+
   }
 };
 
