@@ -179,17 +179,28 @@ toastButtonGroup.append(
   MyUI.Button({
     text: 'Success Toast (3s)',
     variant: 'success',
-    onClick: () => {} // TODO My.Toast({msg,variant, duration})
+    onClick: () => MyUI.Toast({
+      message: 'Well done!!!',
+      variant: 'success'
+    })
   }),
   MyUI.Button({
     text: 'Danger Toast (5s)',
     variant: 'danger',
-    onClick: () => {} // TODO My.Toast({msg,variant, duration})
+    onClick: () => MyUI.Toast({
+      message: 'Server connection error',
+      variant: 'danger',
+      duration: 5000
+    })
   }),
   MyUI.Button({
     text: 'Persistent Toast',
     variant: 'dark',
-    onClick: () => {} // TODO My.Toast({msg,variant, duration})
+    onClick: () => MyUI.Toast({
+      message: 'Need to close by yourself',
+      variant: 'dark',
+      duration: 0
+    })
   })
 );
 
