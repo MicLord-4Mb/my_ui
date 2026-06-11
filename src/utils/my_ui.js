@@ -73,15 +73,27 @@ const MyUI = {
   },
 
   Button(props) {
-    const defClass = 'btn btn-primary';
-    const className = props.className ? `${defClass} ${props.className}` : defClass;
-    return createBaseElement('button', {...props, className});
+    const { variant = 'primary', className, ...restProps } = props;
+    const finalClass = ['btn', `btn-${variant}`, className].filter(Boolean).join(' ');
+    return createBaseElement('button', {...restProps, className: finalClass});
   },
 
   Input(props) {
-    const defClass = 'form-control';
-    const className = props.className ? `${defClass} ${props.className}` : defClass;
-    return createBaseElement('input', {...props, className});
+    const { className, type = 'text', size, ...restProps } = props;
+
+    let defClass = 'form-control';
+
+    if (type === 'color') {
+      defClass = 'form-control form-control-color';
+    } else if (type === 'range') {
+      defClass = 'form-range';
+    } else if (props.readonly && props.plaintext) {
+      defClass = 'form-control-plaintext';
+    }
+
+    const sizeClass = size ? `form-control-${size}` : '';
+    const finalClass = [defClass, sizeClass, className].filter(Boolean).join(' ');
+    return createBaseElement('input', {...restProps, type, className: finalClass });
   },
 
   Card(props) {
@@ -115,6 +127,58 @@ const MyUI = {
 
     $card.append($cardBody);
     return $card;
+  },
+
+  Modal(props) {
+    const { id, title, body, footer, size = '', className, ...restProps } = props;
+
+    const $header = createBaseElement('div', { className: 'modal-header' });
+    if (title) {
+      $header.append(createBaseElement('h5', { text: title, className: 'modal-title' }));
+    }
+    $header.append(createBaseElement('button', {
+      type: 'button',
+      className: 'btn-close',
+      'data-bs-dismiss': 'modal',
+      'aria-label': 'Close'
+    }));
+
+    const $body = createBaseElement('div', { className: 'modal-body' });
+    if (body) {
+      const bodyChildren = Array.isArray(body) ? body : [body];
+      $body.append(...bodyChildren.filter(child => child !== null && child !== undefined));
+    }
+
+    const $content = createBaseElement('div', { className: 'modal-content' });
+    $content.append($header, $body);
+
+    if (footer) {
+      const $footer = createBaseElement('div', { className: 'modal-footer' });
+      const footerChildren = Array.isArray(footer) ? footer : [footer];
+      $footer.append(...footerChildren.filter(child => child !== null && child !== undefined));
+      $content.append($footer);
+    }
+
+    const $dialog = createBaseElement('div', { className: `modal-dialog ${size}`.trim() });
+    $dialog.append($content);
+
+    const modalClass = `modal fade ${className || ''}`.trim();
+    const $modal= createBaseElement('div', {
+      ...restProps,
+      id: id,
+      className: modalClass,
+      tabindex: '-1',
+      'aria-hidden': 'true',
+      children: $dialog
+    });
+
+    $modal.addEventListener('hide.bs.modal', () => {
+      if (document.activeElement && $modal.contains(document.activeElement)) {
+        document.activeElement.blur();
+      }
+    });
+
+    return $modal;
   }
 };
 
