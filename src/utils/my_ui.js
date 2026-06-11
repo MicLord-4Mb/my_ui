@@ -233,8 +233,10 @@ const MyUI = {
       children: $flexWrapper
     });
 
-    // TODO remover
-    const removeToast = () => {}
+    const removeToast = () => {
+      $toast.classList.remove('show');
+      setTimeout(()=>$toast.remove(), 300); // wait Bootstrap animation
+    };
 
     $closeBtn.addEventListener('click', removeToast);
 
