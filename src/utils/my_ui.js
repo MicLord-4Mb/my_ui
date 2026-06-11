@@ -80,7 +80,7 @@ const MyUI = {
   },
 
   Input(props) {
-    const { className, type = 'text', size, ...restProps } = props;
+    const { className, type = 'text', size, id, ...restProps } = props;
 
     if(!id) {
       inputCounter++;
