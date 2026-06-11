@@ -1,5 +1,4 @@
 OK... Let's think about it!!! =>
-1. I need to figure out how to copy objects in jQuery.... The card problem is most likely there...
-2. Create new instances via callbacks for molecules :-?
-3. Do I need style.css?
-4. Create tree components and setup exports...
+1. TS?
+2. Alerts?
+3. Carousel?
