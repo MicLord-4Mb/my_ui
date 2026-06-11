@@ -25,22 +25,20 @@ function createBaseElement(tag, props = {})
       el.addEventListener(eventName, value);
     } else if (typeof value === 'boolean') {
       el.toggleAttribute(key, value);
+      if (key in el) {
+        el[key] = value;
+      }
     } else if (value !== undefined && value !== null) {
-      el.setAttribute(key, value);
+      if (key === 'value' || key === 'checked') {
+        el[key] = value;
+      } else {
+        el.setAttribute(key, value);
+      }
     }
   }
 
   if (children) {
     const childrenArray = Array.isArray(children) ? children : [children];
-    // childrenArray.forEach(child => {
-    //   if (child) {
-    //     if (child instanceof HTMLElement) {
-    //       el.appendChild(child);
-    //     } else {
-    //       el.appendChild(document.createTextNode(child));
-    //     }
-    //   }
-    // });
 
     // filtered null/undefined
     const validChildren = childrenArray.filter(child => child !== null && child !== undefined);
@@ -134,7 +132,7 @@ const MyUI = {
 
     if (children) {
       const childrenArray = Array.isArray(children) ? children : [children];
-      const validChildren = childrenArray.filter(child => child instanceof HTMLElement);
+      const validChildren = childrenArray.filter(child => child !==null && child !== undefined);
       $cardBody.append(...validChildren);
     }
 
