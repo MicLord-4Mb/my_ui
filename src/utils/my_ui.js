@@ -4,6 +4,7 @@
  */
 
 let globalTheme = 'light';
+let inputCounter = 0;
 
 function createBaseElement(tag, props = {})
 {
@@ -81,6 +82,11 @@ const MyUI = {
   Input(props) {
     const { className, type = 'text', size, ...restProps } = props;
 
+    if(!id) {
+      inputCounter++;
+    }
+
+    const finalId = id || `ui-input-${inputCounter}`;
     let defClass = 'form-control';
 
     if (type === 'color') {
@@ -93,7 +99,14 @@ const MyUI = {
 
     const sizeClass = size ? `form-control-${size}` : '';
     const finalClass = [defClass, sizeClass, className].filter(Boolean).join(' ');
-    return createBaseElement('input', {...restProps, type, className: finalClass });
+    return createBaseElement(
+      'input',
+      {
+        ...restProps,
+        type,
+        id: finalId,
+        className: finalClass
+      });
   },
 
   Card(props) {
