@@ -213,7 +213,10 @@ const MyUI = {
       text: message
     });
 
-    const closeBtnClass = 'btn-close btn-close-white me-2 m-auto'
+    // const closeBtnClass = 'btn-close btn-close-white me-2 m-auto';
+    const closeBtnClass = ['primary', 'success', 'danger', 'dark'].includes(variant)
+      ? 'btn-close btn-close-white me-2 m-auto'
+      : 'btn-close me-2 m-auto';
 
     const $closeBtn = createBaseElement('button', {
       type: 'button',
