@@ -233,9 +233,18 @@ const MyUI = {
       children: $flexWrapper
     });
 
-    // TODO remover + click + timeout + mount
+    // TODO remover
+    const removeToast = () => {}
 
+    $closeBtn.addEventListener('click', removeToast);
 
+    if (duration>0) {
+      setTimeout(removeToast, duration);
+    }
+
+    container.append($toast);
+
+    return $toast;
   }
 };
 
