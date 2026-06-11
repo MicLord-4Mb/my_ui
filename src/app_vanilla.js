@@ -166,3 +166,32 @@ const modalTriggerBtn = MyUI.Button({
 
 modalSection.append(modalTriggerBtn, modalInstance);
 rootContainer.append(modalSection);
+
+// ==========================================
+// 6. TOAST NOTIFICATIONS SHOWCASE
+// ==========================================
+const toastSection = MyUI.Tag('div', { className: 'mb-5' });
+toastSection.append(MyUI.Tag('h3', { text: 'Toasts (Queue & Timers)', className: 'mb-3' }));
+
+const toastButtonGroup = MyUI.Tag('div', { className: 'd-flex gap-2 flex-wrap' });
+
+toastButtonGroup.append(
+  MyUI.Button({
+    text: 'Success Toast (3s)',
+    variant: 'success',
+    onClick: () => {} // TODO My.Toast({msg,variant, duration})
+  }),
+  MyUI.Button({
+    text: 'Danger Toast (5s)',
+    variant: 'danger',
+    onClick: () => {} // TODO My.Toast({msg,variant, duration})
+  }),
+  MyUI.Button({
+    text: 'Persistent Toast',
+    variant: 'dark',
+    onClick: () => {} // TODO My.Toast({msg,variant, duration})
+  })
+);
+
+toastSection.append(toastButtonGroup);
+rootContainer.append(toastSection);

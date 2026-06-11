@@ -5,6 +5,7 @@
 
 let globalTheme = 'light';
 let inputCounter = 0;
+let toastContainer = null;
 
 function createBaseElement(tag, props = {})
 {
@@ -45,6 +46,15 @@ function createBaseElement(tag, props = {})
     el.append(...validChildren);
   }
   return el;
+}
+
+function getToastContainer() {
+  toastContainer = createBaseElement('div', {
+    className: 'toast-container position-fixed bottom-0 end-0 p-3',
+    style: 'z-index: 1055;' // Bootstrap modal at #1050
+  });
+  document.body.append(toastContainer);
+  return toastContainer;
 }
 
 // --- API ---
