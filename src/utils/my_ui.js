@@ -213,9 +213,11 @@ const MyUI = {
       text: message
     });
 
+    const closeBtnClass = 'btn-close btn-close-white me-2 m-auto'
+
     const $closeBtn = createBaseElement('button', {
       type: 'button',
-      className: 'btn-close me-2 m-auto',
+      className: closeBtnClass,
       'aria-label': 'Close'
     });
 
