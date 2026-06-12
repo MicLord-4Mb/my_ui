@@ -205,6 +205,8 @@ const MyUI = {
   },
 
   Toast(props) {
+    let timerId = null;
+
     const { message, variant = 'primary', duration = 3000, ...restProps } = props;
     const container = getToastContainer();
 
@@ -239,14 +241,20 @@ const MyUI = {
     });
 
     const removeToast = () => {
+      if (timerId) {
+        clearTimeout(timerId);
+        timerId = null;
+      }
       $toast.classList.remove('show');
-      setTimeout(()=>$toast.remove(), 300); // wait Bootstrap animation
+      $toast.addEventListener('transitionend',()=>{
+        $toast.remove()
+      }, {once: true});
     };
 
     $closeBtn.addEventListener('click', removeToast);
 
     if (duration>0) {
-      setTimeout(removeToast, duration);
+      timerId = setTimeout(removeToast, duration);
     }
 
     container.append($toast);
