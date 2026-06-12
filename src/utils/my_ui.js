@@ -195,11 +195,14 @@ const MyUI = {
       children: $dialog
     });
 
-    $modal.addEventListener('hide.bs.modal', () => {
-      if (document.activeElement && $modal.contains(document.activeElement)) {
-        document.activeElement.blur();
-      }
-    });
+    //
+    // REMEMBER!!! accessibility problem ... focus should return to the element that opened it(AI).
+    //
+    // $modal.addEventListener('hide.bs.modal', () => {
+    //   if (document.activeElement && $modal.contains(document.activeElement)) {
+    //     document.activeElement.blur();
+    //   }
+    // });
 
     return $modal;
   },
