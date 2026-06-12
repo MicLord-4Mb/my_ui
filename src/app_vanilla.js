@@ -16,12 +16,18 @@ const description = MyUI.Tag('p', {
 });
 
 const themeToggleBtn = MyUI.Button({
-  text: 'Toggle Dark / Light Mode',
+  text: 'Switch to Dark Mode',
   variant: 'outline-dark',
   onClick: () => {
     const current = MyUI.toggleTheme();
     // Dynamically adjust button styling to match state
-    themeToggleBtn.className = current === 'dark' ? 'btn btn-outline-light' : 'btn btn-outline-dark';
+    if (current === 'dark') {
+      themeToggleBtn.textContent = 'Switch to Light Mode';
+      // themeToggleBtn.classList.replace('btn-outline-dark', 'btn-outline-light');
+    } else {
+      themeToggleBtn.textContent = 'Switch to Dark Mode';
+      // themeToggleBtn.classList.replace('btn-outline-light', 'btn-outline-dark');
+    }
   }
 });
 
