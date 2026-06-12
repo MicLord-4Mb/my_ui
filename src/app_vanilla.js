@@ -212,3 +212,64 @@ toastButtonGroup.append(
 
 toastSection.append(toastButtonGroup);
 rootContainer.append(toastSection);
+
+// ==========================================
+// 7. PROGRAMMATIC MODAL API SHOWCASE
+// ==========================================
+const dynamicModalSection = MyUI.Tag('div', {
+  className: 'mb-5 p-4 border border-primary-subtle rounded bg-body-tertiary shadow-sm'
+});
+
+dynamicModalSection.append(
+  MyUI.Tag('h3', { text: 'Dynamic Modals (JS API)', className: 'mb-2 text-primary' }),
+  MyUI.Tag('p', {
+    text: 'Creating "disposable" modal windows on the fly. They automatically clean up the DOM after closing.',
+    className: 'text-muted mb-4'
+  })
+);
+
+const dynamicModalBtn = MyUI.Button({
+  text: 'Trigger Programmatic Confirm',
+  variant: 'danger',
+  className: 'px-4',
+  onClick: () => {
+    // 1. Create modal instance
+    const confirmDialog = MyUI.Modal({
+      title: 'Critical Action',
+      body: 'Are you sure you want to proceed? This DOM node will be completely destroyed after closing.',
+      destroyOnClose: true, // Enable our new cleanup feature
+      footer: [
+        MyUI.Button({
+          text: 'Cancel',
+          variant: 'light',
+          'data-bs-dismiss': 'modal'
+        }),
+        MyUI.Button({
+          text: 'Confirm & Execute',
+          variant: 'danger',
+          onClick: (e) => {
+            // Simulate loading (API request)
+            const targetBtn = e.target;
+            const originalText = targetBtn.textContent;
+            targetBtn.textContent = 'Processing...';
+            targetBtn.disabled = true;
+
+            setTimeout(() => {
+              targetBtn.textContent = originalText;
+              targetBtn.disabled = true;
+              MyUI.Toast({ message: 'Action completed successfully!', variant: 'success' });
+              confirmDialog.hide(); // 2. Close programmatically!
+            }, 1200);
+          }
+        })
+      ]
+    });
+
+    // 3. Append to document and show
+    document.body.append(confirmDialog);
+    confirmDialog.show();
+  }
+});
+
+dynamicModalSection.append(dynamicModalBtn);
+rootContainer.append(dynamicModalSection);

@@ -153,7 +153,7 @@ const MyUI = {
   },
 
   Modal(props) {
-    const { id, title, body, footer, size = '', className, ...restProps } = props;
+    const { id, title, body, footer, size = '', className, destroyOnClose, ...restProps } = props;
 
     const $header = createBaseElement('div', { className: 'modal-header' });
     if (title) {
@@ -203,6 +203,31 @@ const MyUI = {
     //     document.activeElement.blur();
     //   }
     // });
+
+    $modal.addEventListener('hidden.bs.modal', () => {
+      if (props.destroyOnClose) {
+        const bsInstance = bootstrap.Modal.getInstance($modal);
+        if (bsInstance) bsInstance.dispose();
+
+        $modal.remove();
+      }
+    });
+
+    $modal.show = () => {
+      if (window.bootstrap) {
+        const bsModal = bootstrap.Modal.getOrCreateInstance($modal);
+        bsModal.show();
+      } else {
+        console.error('[MyUI] Bootstrap JS is not loaded.')
+      }
+    };
+
+    $modal.hide = () => {
+      if (window.bootstrap) {
+        const bsModal = bootstrap.Modal.getInstance($modal);
+        if (bsModal) bsModal.hide();
+      }
+    }
 
     return $modal;
   },
